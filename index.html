@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Chart.js</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Dashboard de Temperatura e Umidade</h1>
+      <p>Graficos gerados com Chart.js utilizando dados de horario e media mensal.</p>
+    </header>
+
+    <div class="info-grid">
+      <div class="info-box">
+        <strong>Horario observado</strong>
+        <span>12:00 a 17:00</span>
+      </div>
+      <div class="info-box">
+        <strong>Temperatura maxima</strong>
+        <span>30°C</span>
+      </div>
+      <div class="info-box">
+        <strong>Umidade maxima</strong>
+        <span>93%</span>
+      </div>
+      <div class="info-box">
+        <strong>Periodo mensal</strong>
+        <span>Janeiro a Junho</span>
+      </div>
+    </div>
+
+    <div class="dashboard">
+      <section class="card">
+        <h2>Gráfico de Linhas</h2>
+        <div class="chart-wrapper">
+          <canvas id="lineChart"></canvas>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Gráfico de Barras</h2>
+        <div class="chart-wrapper">
+          <canvas id="barChart"></canvas>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const lineCtx = document.getElementById('lineChart').getContext('2d');
+    const barCtx = document.getElementById('barChart').getContext('2d');
+
+    new Chart(lineCtx, {
+      type: 'line',
+      data: {
+        labels: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
+        datasets: [
+          {
+            label: 'Temperatura (°C)',
+            data: [30, 29, 28, 25, 22, 23],
+            borderColor: '#2563eb',
+            backgroundColor: 'rgba(37, 99, 235, 0.15)',
+            tension: 0.55,
+            pointRadius: 6,
+            pointBackgroundColor: '#2563eb',
+            fill: true,
+          },
+          {
+            label: 'Umidade (%)',
+            data: [80, 82, 80, 85, 80, 83],
+            borderColor: '#10b981',
+            backgroundColor: 'rgba(16, 185, 129, 0.15)',
+            tension: 0.35,
+            pointRadius: 5,
+            pointBackgroundColor: '#10b981',
+            fill: true,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          }
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Horário',
+              color: '#475569',
+            },
+            grid: {
+              display: true,
+            }
+          },
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Valor',
+              color: '#475569',
+            },
+            grid: {
+              color: 'rgba(148, 163, 184, 0.2)',
+            }
+          }
+        }
+      }
+    });
+
+    new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
+        datasets: [
+          {
+            label: 'Temperatura Media (°C)',
+            data: [22, 24, 27, 23, 20, 18],
+            backgroundColor: '#2563eb',
+            borderRadius: 10,
+            barPercentage: 0.75,
+          },
+          {
+            label: 'Umidade Media (%)',
+            data: [90, 89, 93, 87, 88, 82],
+            backgroundColor: '#10b981',
+            borderRadius: 10,
+            barPercentage: 0.75,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+          }
+        },
+        scales: {
+          x: {
+            stacked: false,
+            grid: {
+              display: false,
+            }
+          },
+          y: {
+            beginAtZero: true,
+            grid: {
+              color: 'rgba(148, 163, 184, 0.18)',
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
